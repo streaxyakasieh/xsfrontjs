@@ -11,22 +11,13 @@ const PaymentPage = ({ source, productPrice }) => {
   const [recipientName, setRecipientName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const [addressWidth, setAddressWidth] = useState(550);
-  const [nameWidth, setNameWidth] = useState(550);
-  const [phoneWidth, setPhoneWidth] = useState(550);
-
   const handlePay = () => {
-    if (
-      !deliveryAddress.trim() ||
-      !recipientName.trim() ||
-      !phone.trim()
-    ) {
+    if (!deliveryAddress.trim() || !recipientName.trim() || !phone.trim()) {
       alert('Пожалуйста, заполните все поля доставки.');
       return;
     }
-    
+
     alert(`Переходим на страницу оплаты...`);
-    
   };
 
   const displayPrice = source === 'product' && productPrice ? productPrice : totalPrice;
@@ -36,41 +27,27 @@ const PaymentPage = ({ source, productPrice }) => {
     : [];
 
   return (
-    <div style={styles.container}>
-      {productNames.length >0 && (
-        <div style={styles.topRightBox}>
-          <h4>Товары:</h4>
-          <ul style={{marginLeft: '10px'}}>
-            {productNames.map((name, index) => (
-              <li key={index} style={{ fontSize: '18px' }}>{name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <div style={styles.pageContainer}>
+      <h2 style={styles.title}>Оплата заказа</h2>
+      <div style={styles.columns}>
+        {/* Левая колонка: форма */}
+        <form onSubmit={(e) => { e.preventDefault(); handlePay(); }} style={styles.formColumn}>
+          <div style={styles.totalPrice}>Итоговая цена: {displayPrice} ₽</div>
 
-      <h2>Оплата заказа</h2>
-
-      <div style={{ marginBottom: '20px', fontSize: '24px', fontWeight: 'bold' }}>
-        Итоговая цена: {displayPrice} ₽
-      </div>
-
-      <div style={styles.content}>
-        <div style={styles.leftSection}>
-          <h3>Доставка</h3>
           <div style={styles.field}>
             <label>Адрес доставки:</label>
             <input
-              style={{ ...styles.input, width: `${addressWidth}px` }}
+              style={styles.input}
               value={deliveryAddress}
               onChange={(e) => setDeliveryAddress(e.target.value)}
               placeholder="Введите адрес"
             />
           </div>
-          
+
           <div style={styles.field}>
             <label>ФИО получателя:</label>
             <input
-              style={{ ...styles.input, width: `${nameWidth}px` }}
+              style={styles.input}
               value={recipientName}
               onChange={(e) => setRecipientName(e.target.value)}
               placeholder="Введите ФИО"
@@ -80,54 +57,104 @@ const PaymentPage = ({ source, productPrice }) => {
           <div style={styles.field}>
             <label>Телефон:</label>
             <input
-              style={{ ...styles.input, width: `${phoneWidth}px` }}
+              style={styles.input}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Введите телефон"
             />
           </div>
-        </div>
+
+          <Button type="submit" style={styles.button}>
+            Оплатить {displayPrice} ₽
+          </Button>
+        </form>
+
+        {/* Правая колонка: список товаров */}
+        {productNames.length > 0 && (
+          <div style={styles.productsColumn}>
+            <h3 style={{ marginBottom: '15px' }}>Товары в заказе</h3>
+            <ul style={{ paddingLeft: '20px' }}>
+              {productNames.map((name, index) => (
+                <li key={index} style={{ fontSize: '16px', marginBottom: '6px' }}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-      
-      <Button onClick={handlePay} style={{ marginTop: '20px' }}>
-        Оплатить {displayPrice} ₽
-      </Button>
     </div>
   );
 };
 
+const sharedWidth = '900px';
+
 const styles = {
- container: {
-   maxWidth: '900px',
-   margin: '50px auto',
-   padding: '20px',
-   border: '1px solid #ddd',
-   borderRadius: '8px',
-   fontFamily: 'Arial, sans-serif',
-   position:"relative"
- },
- topRightBox:{
-   position:"absolute",
-   top:"10px",
-   right:"10px",
-   backgroundColor:"#f9f9f9",
-   padding:"10px",
-   borderRadius:"8px",
-   boxShadow:"0 2px 8px rgba(0,0,0,0.1)"
- },
- content: {
-   display: 'flex',
-   gap: '40px',
-   flexWrap: 'wrap',
- },
- leftSection: {
-   flex: '1',
-   minWidth: '250px',
-   display: 'flex',
-   flexDirection: 'column',
- },
- field:{ display:"flex", flexDirection:"column", marginBottom:"15px" },
- input:{ padding:"10px", borderRadius:"4px", border:"1px solid #ccc" }
+  pageContainer: {
+    maxWidth: '900px',
+    margin: '50px auto',
+    padding: '30px',
+    border: '1px solid #ddd',
+    borderRadius: '12px',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: '26px',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: '30px',
+  },
+  columns: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '50px',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  formColumn: {
+    flex: '1 1 60%',
+    minWidth: '350px',
+  },
+  productsColumn: {
+    flex: '1 1 35%',
+    minWidth: '250px',
+    backgroundColor: '#f9f9f9',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+  },
+  totalPrice: {
+    fontSize: '22px',
+    fontWeight: 'bold',
+    marginBottom: '30px',
+  },
+  field: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: '20px',
+  },
+  input: {
+    width: '870px',
+    padding: '12px 15px',
+    fontSize: '16px',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+  },
+  button: {
+    width: '900px',
+    padding: '15px',
+    backgroundColor: '#4CAF50',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    fontSize: '16px',
+    marginTop: '10px',
+  },
 };
 
 export default PaymentPage;

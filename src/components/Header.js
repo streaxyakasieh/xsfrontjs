@@ -1,25 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import logo from '../assets/images/logo.png';
 
 const Header = () => {
   return (
     <header style={styles.header}>
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+      <Link to="/" style={styles.logoContainer}>
         <img src={logo} alt="Логотип" style={styles.logo} />
-        <h1 style={styles.logoText}>Мой магазин</h1>
+        <span style={styles.logoText}>Магазин</span>
       </Link>
-      
-      <div style={styles.catalogButton}>
-        <div style={styles.menuIcon}>≡</div>
-        <Link style={styles.catalogLink} to="/catalog">Каталог</Link>
-      </div>
 
       <nav style={styles.nav}>
-        <Link style={styles.link} to="/favorites">Избранное</Link>
-        <Link style={styles.link} to="/cart">Корзина</Link>
-        <Link style={styles.link} to="/profile">Личный кабинет</Link>
+        <Link to="/catalog" style={styles.navLink}>Каталог</Link>
+        <Link to="/cart" style={styles.navLink}>Корзина</Link>
+        <Link to="/profile" style={styles.navLink}>Профиль</Link>
       </nav>
     </header>
   );
@@ -30,48 +24,44 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '15px 30px',
-    backgroundColor: '#f8f8f8',
+    padding: '16px 40px',
+    backgroundColor: '#fff',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
   },
   logo: {
-    width: '48px',
+    width: '42px',
     height: 'auto',
     marginRight: '10px',
   },
   logoText: {
-    margin: 0,
-    color: '#333',
     fontSize: '32px',
+    fontWeight: 'bold',
+    color: '#4CAF50',
+    letterSpacing: '0.5px',
   },
   nav: {
     display: 'flex',
-    gap: '15px',
+    gap: '0px',
   },
-  link: {
-    textDecoration: 'none',
+  navLink: {
+    fontSize: '22px', // увеличено с 16px
+    fontWeight: '500',
     color: '#333',
-    fontSize: '20px',
-  },
-
-  catalogButton: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#3b4cca',
-    borderRadius: '8px',
-    padding: '8px 12px',
-    cursor: 'pointer',
-    marginLeft: '-1000px',
-  },
-  menuIcon: {
-    fontSize: '20px',
-    color: '#fff',
-    marginRight: '8px',
-  },
-  catalogLink: {
-    color: '#fff',
-    fontSize: '16px',
     textDecoration: 'none',
+    padding: '10px 18px',
+    borderRadius: '8px',
+    transition: 'background-color 0.2s, color 0.2s',
+    letterSpacing: '0.3px',
   },
 };
+
 
 export default Header;

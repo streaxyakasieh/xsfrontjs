@@ -39,7 +39,7 @@ const Cart = ({ items }) => {
     <div style={styles.container}>
       <h2 style={styles.title}>Корзина</h2>
       {items.length === 0 ? (
-        <p>Корзина пуста</p>
+        <p style={styles.emptyMessage}>Корзина пуста</p>
       ) : (
         <div style={styles.grid}>
           {items.map((item) => (
@@ -63,7 +63,7 @@ const Cart = ({ items }) => {
       {items.length > 0 && (
         <>
           <h3 style={styles.total}>Общая сумма: {totalPrice} ₽</h3>
-          <Button style={{ marginTop: '20px' }} onClick={handleOrder}>
+          <Button style={{ ...styles.button, marginTop: '20px' }} onClick={handleOrder}>
             Оформить заказ
           </Button>
         </>
@@ -77,12 +77,20 @@ const styles = {
     maxWidth: '1600px',
     margin: '50px auto',
     padding: '30px',
+    backgroundColor:'#f0f2f5', // фон из Add.js
+    fontFamily:"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", // шрифт из Add.js
     boxSizing:'border-box'
   },
   title: {
-    marginBottom: '20px',
+    marginBottom:'20px',
     fontSize:'28px',
-    textAlign:'left'
+    textAlign:'center',
+    color:'#333'
+  },
+  emptyMessage:{
+    fontSize:'18px',
+    color:'#555',
+    textAlign:'center'
   },
   grid: {
     display:'grid',
@@ -140,6 +148,13 @@ total:{
 marginTop:'30px', 
 fontSize:'24px', 
 fontWeight:'600'
+},
+button:{
+ backgroundColor:'#4CAF50', // цвет кнопки из Add.js
+ color:'#fff', // цвет текста кнопки
+ borderRadius:'8px',
+ cursor:'pointer',
+ transition:'background-color 0.3s ease'
 }
 };
 

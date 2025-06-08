@@ -110,85 +110,126 @@ const Catalog = ({ addToCart }) => {
     setNotification('Товар добавлен в корзину!');
   };
 
-  const addButtonStyle = {
-    marginTop:'10px', 
-    padding:'8px', 
-    fontSize:'14px', 
-    backgroundColor:'#007bff', 
-    color:'#fff', 
-    border:'none', 
-    borderRadius:'4px', 
-    cursor:'pointer'
+  const styles = {
+    container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '40px 20px',
+      backgroundColor: '#f0f2f5',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    },
+    header: {
+      fontSize: '28px',
+      fontWeight: '1200',
+      textAlign: 'center',
+      marginBottom: '20px',
+      color: '#333',
+    },
+    notification: {
+      position: 'fixed',
+      top: '90px',
+      right: '20px',
+      backgroundColor: '#4CAF50',
+      color: '#fff',
+      padding: '12px 24px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+      zIndex: 1000,
+    },
+    grid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+      gap: '30px',
+    },
+    card: {
+      backgroundColor: '#fff',
+      borderRadius: '10px',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      transition: 'transform 0.2s ease',
+    },
+    image: {
+      width: '100%',
+      height: '260px',
+      objectFit: 'cover',
+    },
+    content: {
+      padding: '20px',
+      flexGrow: 1,
+    },
+    name: {
+      fontSize: '18px',
+      fontWeight: '600',
+      marginBottom: '10px',
+      color: '#333',
+    },
+    priceBlock: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginBottom: '15px',
+    },
+    price: {
+      fontSize: '18px',
+      fontWeight: 'bold',
+      color: '#111',
+    },
+    oldPrice: {
+      fontSize: '14px',
+      color: '#999',
+      textDecoration: 'line-through',
+    },
+    button: {
+      width: '100%',
+      padding: '12px',
+      backgroundColor: '#4CAF50',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      fontSize: '16px',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s ease',
+    },
+    link: {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
   };
 
-  const styles = {
-    container :{
-      maxWidth:'1600px', margin:'50px auto', padding:'10px'
-    }, 
-    grid :{
-      display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(250px,1fr))', gap:'30px', marginTop:'60px'
-    }, 
-    card :{
-      backgroundColor:'#fff', borderRadius:'12px', boxShadow:'0 6px 16px rgba(0,0,0,0.15)', overflow:'hidden', cursor:'pointer', display:'flex', flexDirection:'column'
-    }, 
-    imageWrapper:{ position:'relative'}, 
-    image:{ width:'100%', height:'300px', objectFit:'cover'}, 
-    info:{ padding:'20px'}, 
-    name:{ fontSize:'20px', fontWeight:'600', marginBottom:'12px'}, 
-    priceSection:{ display:'flex', alignItems:'center', marginBottom:'12px'}, 
-    price:{ fontSize:'20px', fontWeight:'bold', marginRight:'15px', color:'#111'}, 
-    oldPrice:{ fontSize:'14px', textDecoration:'line-through', color:'#999'}
-};
+  return (
+    <div style={styles.container}>
+      <h2 style={styles.header}>Каталог товаров</h2>
+      {notification && <div style={styles.notification}>{notification}</div>}
 
-return (
-<div style={styles.container}>
-<h2>Каталог товаров</h2>
-{notification && (
-<div style={{
-position:"fixed",
-top:"95px",
-right:"20px",
-backgroundColor:"#4BB543",
-color:"#fff",
-padding:"10px 20px",
-borderRadius:"8px",
-boxShadow:"0 4px 8px rgba(0,0,0,0.2)",
-zIndex:"999"
-}}>
-{notification}
-</div>
-)}
-<div style={styles.grid}>
-{products.map((product) => (
-<div key={product.id} style={styles.card}>
-<Link
-to={`/product/${product.id}`}
-style={{
-textDecoration:'none', color:'inherit'
-}}
->
-<div style={styles.imageWrapper}>
-<img src={product.image} alt={product.name} style={styles.image} />
-</div>
-<div style={styles.info}>
-<div style={styles.name}>{product.name}</div>
-<div style={styles.priceSection}>
-<div style={styles.price}>{product.price} ₽</div>
-<div style={styles.oldPrice}>{product.oldPrice} ₽</div>
-</div>
-</div>
-</Link>
-<button
-style={addButtonStyle}
- onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
->
-Добавить в корзину
-</button>
-</div>
-))}
-</div>
-</div>
-);
+      <div style={styles.grid}>
+        {products.map((product) => (
+          <div key={product.id} style={styles.card}>
+            <Link to={`/product/${product.id}`} style={styles.link}>
+              <img src={product.image} alt={product.name} style={styles.image} />
+              <div style={styles.content}>
+                <div style={styles.name}>{product.name}</div>
+                <div style={styles.priceBlock}>
+                  <div style={styles.price}>{product.price} ₽</div>
+                  <div style={styles.oldPrice}>{product.oldPrice} ₽</div>
+                </div>
+              </div>
+            </Link>
+            <button
+              style={styles.button}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(product);
+              }}
+            >
+              Добавить в корзину
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Catalog;

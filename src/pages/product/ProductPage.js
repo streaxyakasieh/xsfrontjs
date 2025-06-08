@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { products } from '../catalog/Catalog';
+
 const ProductPage = ({ addToCart }) => {
   const { id } = useParams();
   const productId = parseInt(id, 10);
-  
+
   const [product, setProduct] = useState(null);
   const [notification, setNotification] = useState('');
 
@@ -38,55 +39,88 @@ const ProductPage = ({ addToCart }) => {
       padding: '15px',
       maxWidth: '900px',
       margin: '0 auto',
-      gap: '20px'
+      gap: '20px',
     }}>
       <div style={{ flex: '1' }}>
         <img
           src={product.image}
           alt={product.name}
-          style={{ width: '100%', height: 'auto' }}
+          style={{
+            width: '100%',
+            height: 'auto',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          }}
         />
       </div>
-      
-      <div style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ marginBottom: '10px' }}>{product.name}</h2>
-        
-        <div style={{ marginBottom: '10px' }}>
-          <h3>Описание</h3>
-          <p>{product.description || "Нет описания"}</p>
+
+      <div style={{
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      }}>
+        <h2 style={{
+          marginBottom: '10px',
+          fontSize: '24px',
+          fontWeight: '600',
+          color: '#333',
+        }}>
+          {product.name}
+        </h2>
+
+        <div style={{
+          marginBottom: '10px',
+        }}>
+          <h3 style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#333',
+          }}>Описание</h3>
+          <p style={{
+            fontSize: '16px',
+            color: '#666',
+          }}>
+            {product.description || 'Нет описания'}
+          </p>
         </div>
 
-        <div style={{ fontSize:'20px', fontWeight:'bold', marginBottom:'20px' }}>
+        <div style={{
+          fontSize: '20px',
+          fontWeight: 'bold',
+          marginBottom: '20px',
+        }}>
           Цена: {product.price} ₽
         </div>
-        
+
         <button
           onClick={handleAddToCart}
           style={{
-            marginTop:'10px', 
-            padding:'8px', 
-            fontSize:'14px', 
-            backgroundColor:'#007bff', 
-            color:'#fff', 
-            border:'none', 
-            borderRadius:'4px', 
-            cursor:'pointer'
+            marginTop: '10px',
+            padding: '10px 15px',
+            fontSize: '16px',
+            backgroundColor: '#4CAF50',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease',
           }}
         >
           Добавить в корзину
         </button>
-        
+
         {notification && (
           <div style={{
-            position:"fixed",
-            top:"95px",
-            right:"20px",
-            backgroundColor:"#4BB543",
-            color:"#fff",
-            padding:"10px 20px",
-            borderRadius:"8px",
-            boxShadow:"0 4px 8px rgba(0,0,0,0.2)",
-            zIndex:"999"
+            position: 'fixed',
+            top: '95px',
+            right: '20px',
+            backgroundColor: '#4CAF50',
+            color: '#fff',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            zIndex: '999',
           }}>
             {notification}
           </div>

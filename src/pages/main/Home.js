@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 
 import img1 from '../../assets/images/1.jpg';
@@ -60,11 +59,18 @@ const Home = () => {
 
   return (
     <div style={styles.container}>
+      <div style={styles.hero}>
+        <h1 style={styles.title}>Добро пожаловать в <span style={styles.brand}>Магазин</span></h1>
+        <p style={styles.subtitle}>Одежда, обувь и аксессуары, которые подчёркивают ваш стиль</p>
+        <button style={styles.button} onClick={handleGoToCatalog}>Перейти в каталог</button>
+      </div>
+
+      <h2 style={styles.sectionTitle}>Популярные товары</h2>
       <div style={styles.grid}>
         {products.map((product, index) => (
           <div key={index} style={styles.card}>
             <div style={styles.imageWrapper}>
-              <img src={product.image} alt="Товар" style={styles.image} />
+              <img src={product.image} alt={product.name} style={styles.image} />
             </div>
             <div style={styles.info}>
               <div style={styles.name}>{product.name}</div>
@@ -74,8 +80,7 @@ const Home = () => {
               </div>
               <div style={styles.rating}>
                 {'★'.repeat(Math.floor(product.rating))}
-                {'☆'.repeat(5 - Math.floor(product.rating))}
-                ({product.reviews} отзывов)
+                {'☆'.repeat(5 - Math.floor(product.rating))} ({product.reviews} отзывов)
               </div>
             </div>
           </div>
@@ -87,71 +92,87 @@ const Home = () => {
 
 const styles = {
   container: {
-    maxWidth: '1600px',
-    margin: '50px auto',
-    padding: '30px',
+    maxWidth: '1400px',
+    margin: '0 auto',
+    padding: '40px 20px',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  },
+  hero: {
     textAlign: 'center',
+    marginBottom: '60px',
+  },
+  title: {
+    fontSize: '42px',
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: '20px',
+  },
+  brand: {
+    color: '#4CAF50',
+  },
+  subtitle: {
+    fontSize: '20px',
+    color: '#555',
+    marginBottom: '30px',
   },
   button: {
-    marginTop: '30px',
-    padding: '16px 32px',
-    backgroundColor: '#3b82f6',
+    padding: '14px 28px',
+    backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
-    fontSize: '18px',
+    fontSize: '16px',
     cursor: 'pointer',
-    transition: 'background-color 0.3s',
+    transition: 'background-color 0.3s ease',
+  },
+  sectionTitle: {
+    fontSize: '26px',
+    fontWeight: '600',
+    marginBottom: '30px',
+    textAlign: 'center',
+    color: '#222',
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '30px',
-    marginTop: '60px',
   },
   card: {
     backgroundColor: '#fff',
     borderRadius: '12px',
-    boxShadow: '0 6px 16px rgba(0,0,0,0.15)',
+    boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
     overflow: 'hidden',
-    cursor: 'pointer',
     display: 'flex',
     flexDirection: 'column',
-    transition: 'transform 0.2s',
+    transition: 'transform 0.2s ease-in-out',
   },
   imageWrapper: {
     position: 'relative',
   },
   image: {
     width: '100%',
-    height: '300px',
+    height: '280px',
     objectFit: 'cover',
   },
-  favorite: {
-    position: 'absolute',
-    top: '15px',
-    right: '15px',
-    fontSize: '26px',
-    color: 'red',
-  },
   info: {
-    padding: '20px',
+    padding: '18px',
   },
   name: {
-    fontSize: '20px',
+    fontSize: '18px',
     fontWeight: '600',
-    marginBottom: '12px',
+    marginBottom: '10px',
+    color: '#333',
   },
   priceSection: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: '12px',
+    marginBottom: '10px',
   },
   price: {
-    fontSize: '20px',
+    fontSize: '18px',
     fontWeight: 'bold',
-    marginRight: '15px',
     color: '#111',
+    marginRight: '10px',
   },
   oldPrice: {
     fontSize: '14px',
@@ -159,8 +180,8 @@ const styles = {
     color: '#999',
   },
   rating: {
-    fontSize: '16px',
-    color: '#555',
+    fontSize: '15px',
+    color: '#666',
   },
 };
 

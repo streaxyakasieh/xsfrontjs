@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './pages/main/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+
 import ProductPage from './pages/product/ProductPage';
 import Profile from './pages/profile/Profile';
 import Favorites from './pages/favorites/Favorites';
@@ -15,6 +16,9 @@ import Orders from './pages/orders/Orders';
 import Catalog from './pages/catalog/Catalog';
 
 import PaymentPage from './pages/payment/PaymentPage';
+
+// Импорт компонента AddProduct (замените путь, если нужно)
+import AddProduct from './pages/add/Add';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -43,6 +47,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Маршрут для страницы добавления товара */}
+          <Route path="/add" element={<AddProduct />} />
 
           {/* Передача addToCart в ProductPage */}
           <Route path="/product/:id" element={<ProductPage addToCart={addToCart} />} />
